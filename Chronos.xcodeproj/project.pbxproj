@@ -1,0 +1,346 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3FC4710116638D9C00A9864D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710016638D9C00A9864D /* UIKit.framework */; };
+		3FC4710316638D9C00A9864D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710216638D9C00A9864D /* Foundation.framework */; };
+		3FC4710516638D9C00A9864D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710416638D9C00A9864D /* CoreGraphics.framework */; };
+		3FC4710B16638D9C00A9864D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4710916638D9C00A9864D /* InfoPlist.strings */; };
+		3FC4710D16638D9C00A9864D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC4710C16638D9C00A9864D /* main.m */; };
+		3FC4711116638D9C00A9864D /* CHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC4711016638D9C00A9864D /* CHAppDelegate.m */; };
+		3FC4711316638D9C00A9864D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4711216638D9C00A9864D /* Default.png */; };
+		3FC4711516638D9C00A9864D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4711416638D9C00A9864D /* Default@2x.png */; };
+		3FC4711716638D9C00A9864D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4711616638D9C00A9864D /* Default-568h@2x.png */; };
+		3FC4711A16638D9C00A9864D /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4711816638D9C00A9864D /* MainStoryboard_iPhone.storyboard */; };
+		3FC4711D16638D9C00A9864D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4711B16638D9C00A9864D /* MainStoryboard_iPad.storyboard */; };
+		3FC4712016638D9C00A9864D /* CHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC4711F16638D9C00A9864D /* CHViewController.m */; };
+		3FC4712B16638E2800A9864D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4712A16638E2800A9864D /* README.md */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3FC470FC16638D9C00A9864D /* Chronos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chronos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FC4710016638D9C00A9864D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3FC4710216638D9C00A9864D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3FC4710416638D9C00A9864D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3FC4710816638D9C00A9864D /* Chronos-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Chronos-Info.plist"; sourceTree = "<group>"; };
+		3FC4710A16638D9C00A9864D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		3FC4710C16638D9C00A9864D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3FC4710E16638D9C00A9864D /* Chronos-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Chronos-Prefix.pch"; sourceTree = "<group>"; };
+		3FC4710F16638D9C00A9864D /* CHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHAppDelegate.h; sourceTree = "<group>"; };
+		3FC4711016638D9C00A9864D /* CHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHAppDelegate.m; sourceTree = "<group>"; };
+		3FC4711216638D9C00A9864D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		3FC4711416638D9C00A9864D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		3FC4711616638D9C00A9864D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		3FC4711916638D9C00A9864D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		3FC4711C16638D9C00A9864D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		3FC4711E16638D9C00A9864D /* CHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHViewController.h; sourceTree = "<group>"; };
+		3FC4711F16638D9C00A9864D /* CHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHViewController.m; sourceTree = "<group>"; };
+		3FC4712A16638E2800A9864D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3FC470F916638D9C00A9864D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FC4710116638D9C00A9864D /* UIKit.framework in Frameworks */,
+				3FC4710316638D9C00A9864D /* Foundation.framework in Frameworks */,
+				3FC4710516638D9C00A9864D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3FC470F116638D9B00A9864D = {
+			isa = PBXGroup;
+			children = (
+				3FC4712A16638E2800A9864D /* README.md */,
+				3FC4710616638D9C00A9864D /* App Core */,
+				3FC4712D16638E4A00A9864D /* Main View */,
+				3FC4712E16638E5B00A9864D /* Localization */,
+				3FC4712F16638E7E00A9864D /* Resources */,
+				3FC470FF16638D9C00A9864D /* Frameworks */,
+				3FC470FD16638D9C00A9864D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3FC470FD16638D9C00A9864D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3FC470FC16638D9C00A9864D /* Chronos.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3FC470FF16638D9C00A9864D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FC4710016638D9C00A9864D /* UIKit.framework */,
+				3FC4710216638D9C00A9864D /* Foundation.framework */,
+				3FC4710416638D9C00A9864D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3FC4710616638D9C00A9864D /* App Core */ = {
+			isa = PBXGroup;
+			children = (
+				3FC4710C16638D9C00A9864D /* main.m */,
+				3FC4710E16638D9C00A9864D /* Chronos-Prefix.pch */,
+				3FC4710816638D9C00A9864D /* Chronos-Info.plist */,
+				3FC4710F16638D9C00A9864D /* CHAppDelegate.h */,
+				3FC4711016638D9C00A9864D /* CHAppDelegate.m */,
+				3FC4711816638D9C00A9864D /* MainStoryboard_iPhone.storyboard */,
+				3FC4711B16638D9C00A9864D /* MainStoryboard_iPad.storyboard */,
+			);
+			name = "App Core";
+			path = Chronos;
+			sourceTree = "<group>";
+		};
+		3FC4710716638D9C00A9864D /* Launch Images */ = {
+			isa = PBXGroup;
+			children = (
+				3FC4711216638D9C00A9864D /* Default.png */,
+				3FC4711416638D9C00A9864D /* Default@2x.png */,
+				3FC4711616638D9C00A9864D /* Default-568h@2x.png */,
+			);
+			name = "Launch Images";
+			path = Chronos;
+			sourceTree = "<group>";
+		};
+		3FC4712D16638E4A00A9864D /* Main View */ = {
+			isa = PBXGroup;
+			children = (
+				3FC4711E16638D9C00A9864D /* CHViewController.h */,
+				3FC4711F16638D9C00A9864D /* CHViewController.m */,
+			);
+			name = "Main View";
+			path = Chronos;
+			sourceTree = "<group>";
+		};
+		3FC4712E16638E5B00A9864D /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				3FC4710916638D9C00A9864D /* InfoPlist.strings */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
+		3FC4712F16638E7E00A9864D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3FC4710716638D9C00A9864D /* Launch Images */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3FC470FB16638D9C00A9864D /* Chronos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3FC4712316638D9C00A9864D /* Build configuration list for PBXNativeTarget "Chronos" */;
+			buildPhases = (
+				3FC470F816638D9C00A9864D /* Sources */,
+				3FC470F916638D9C00A9864D /* Frameworks */,
+				3FC470FA16638D9C00A9864D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Chronos;
+			productName = Chronos;
+			productReference = 3FC470FC16638D9C00A9864D /* Chronos.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3FC470F316638D9B00A9864D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = CH;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Leonhard Lichtschlag";
+			};
+			buildConfigurationList = 3FC470F616638D9B00A9864D /* Build configuration list for PBXProject "Chronos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3FC470F116638D9B00A9864D;
+			productRefGroup = 3FC470FD16638D9C00A9864D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3FC470FB16638D9C00A9864D /* Chronos */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3FC470FA16638D9C00A9864D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FC4710B16638D9C00A9864D /* InfoPlist.strings in Resources */,
+				3FC4711316638D9C00A9864D /* Default.png in Resources */,
+				3FC4711516638D9C00A9864D /* Default@2x.png in Resources */,
+				3FC4711716638D9C00A9864D /* Default-568h@2x.png in Resources */,
+				3FC4711A16638D9C00A9864D /* MainStoryboard_iPhone.storyboard in Resources */,
+				3FC4711D16638D9C00A9864D /* MainStoryboard_iPad.storyboard in Resources */,
+				3FC4712B16638E2800A9864D /* README.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3FC470F816638D9C00A9864D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3FC4710D16638D9C00A9864D /* main.m in Sources */,
+				3FC4711116638D9C00A9864D /* CHAppDelegate.m in Sources */,
+				3FC4712016638D9C00A9864D /* CHViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3FC4710916638D9C00A9864D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3FC4710A16638D9C00A9864D /* en */,
+			);
+			name = InfoPlist.strings;
+			path = Chronos;
+			sourceTree = "<group>";
+		};
+		3FC4711816638D9C00A9864D /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3FC4711916638D9C00A9864D /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		3FC4711B16638D9C00A9864D /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3FC4711C16638D9C00A9864D /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3FC4712116638D9C00A9864D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3FC4712216638D9C00A9864D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3FC4712416638D9C00A9864D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Chronos/Chronos-Prefix.pch";
+				INFOPLIST_FILE = "Chronos/Chronos-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3FC4712516638D9C00A9864D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Chronos/Chronos-Prefix.pch";
+				INFOPLIST_FILE = "Chronos/Chronos-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3FC470F616638D9B00A9864D /* Build configuration list for PBXProject "Chronos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FC4712116638D9C00A9864D /* Debug */,
+				3FC4712216638D9C00A9864D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3FC4712316638D9C00A9864D /* Build configuration list for PBXNativeTarget "Chronos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FC4712416638D9C00A9864D /* Debug */,
+				3FC4712516638D9C00A9864D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3FC470F316638D9B00A9864D /* Project object */;
+}
