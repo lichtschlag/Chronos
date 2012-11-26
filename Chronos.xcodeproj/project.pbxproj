@@ -20,6 +20,7 @@
 		3FC4711D16638D9C00A9864D /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4711B16638D9C00A9864D /* MainStoryboard_iPad.storyboard */; };
 		3FC4712016638D9C00A9864D /* CHViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC4711F16638D9C00A9864D /* CHViewController.m */; };
 		3FC4712B16638E2800A9864D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3FC4712A16638E2800A9864D /* README.md */; };
+		3FC471361663C91000A9864D /* CHJSONLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FC471351663C91000A9864D /* CHJSONLoader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		3FC4711E16638D9C00A9864D /* CHViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CHViewController.h; sourceTree = "<group>"; };
 		3FC4711F16638D9C00A9864D /* CHViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CHViewController.m; sourceTree = "<group>"; };
 		3FC4712A16638E2800A9864D /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		3FC471341663C91000A9864D /* CHJSONLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHJSONLoader.h; sourceTree = "<group>"; };
+		3FC471351663C91000A9864D /* CHJSONLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHJSONLoader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +122,8 @@
 			children = (
 				3FC4711E16638D9C00A9864D /* CHViewController.h */,
 				3FC4711F16638D9C00A9864D /* CHViewController.m */,
+				3FC471341663C91000A9864D /* CHJSONLoader.h */,
+				3FC471351663C91000A9864D /* CHJSONLoader.m */,
 			);
 			name = "Main View";
 			path = Chronos;
@@ -212,6 +217,7 @@
 				3FC4710D16638D9C00A9864D /* main.m in Sources */,
 				3FC4711116638D9C00A9864D /* CHAppDelegate.m in Sources */,
 				3FC4712016638D9C00A9864D /* CHViewController.m in Sources */,
+				3FC471361663C91000A9864D /* CHJSONLoader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
