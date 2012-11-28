@@ -14,6 +14,7 @@
 // ===============================================================================================================
 
 @property (strong) 	CHJSONLoader *clientLoader;
+@property (strong) 	NSOperationQueue *backgroundQueue;
 
 @end
 
@@ -36,6 +37,9 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 - (void) viewDidLoad
 {
     [super viewDidLoad];
+	
+	self.backgroundQueue = [[NSOperationQueue alloc] init];
+	[self.backgroundQueue setName:@"de.rwth.hci.iPhoneClass.chronos.backgroundQueue"];	
 }
 
 
@@ -60,28 +64,25 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 - (void) startLoadingAuthors
 {
 	// start the download
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kCHZeitServerClient]];
+	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
 	[request setValue:kCHZeitLeonhardAPIKey forHTTPHeaderField:@"X-Authorization"];
 	assert(request != nil);
 	
-	self.clientLoader = [[CHJSONLoader alloc] init];
-	__weak CHViewController *weakSelf = self;
-	[self.clientLoader startLoadingFromURL:request completion:^(NSString *information, NSDictionary *response)
+	[NSURLConnection sendAsynchronousRequest:request
+									   queue:self.backgroundQueue
+						   completionHandler:^(NSURLResponse *resp, NSData *data, NSError *err)
 	 {
-		 // do something once finished
-		 if (information)
+		 [[NSOperationQueue mainQueue] addOperationWithBlock:^
 		 {
-			 NSLog(@"Failed to get client Information. %@", information);
-		 }
-		 else
-		 {
-			 NSInteger quota = [response[@"quota"] intValue];
-			 NSLog(@"Remaining quota is %d.", quota);
-			 [weakSelf startLoadingAuthors];
-		 }
-		 
-		 weakSelf.clientLoader = nil;
-	 }];
+			 NSError* error;
+			 NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
+																		options:kNilOptions
+																		  error:&error];
+			 
+			 NSLog(@"%s done, data:\n %@", __PRETTY_FUNCTION__, parsedDict);
+		 }];
+	}];
 }
 
 
