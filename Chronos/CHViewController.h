@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@class CHActivityView;
+
+// ===============================================================================================================
 @interface CHViewController : UIViewController
+// ===============================================================================================================
+
+@property (weak, nonatomic) IBOutlet CHActivityView *activityView;
+@property (weak, nonatomic) IBOutlet UIButton *mainButton;
+
+- (IBAction) buttonPressed:(id)sender;
 
 @end

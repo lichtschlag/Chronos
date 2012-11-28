@@ -8,6 +8,7 @@
 
 #import "CHViewController.h"
 #import "CHJSONLoader.h"
+#import "CHActivityView.h"
 
 // ===============================================================================================================
 @interface CHViewController ()
@@ -15,6 +16,7 @@
 
 @property (strong) 	CHJSONLoader *clientLoader;
 @property (strong) 	NSOperationQueue *backgroundQueue;
+@property (strong)	NSTimer *drawingTimer;
 
 @end
 
@@ -52,7 +54,122 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 
 - (void) viewWillAppear:(BOOL)animated
 {
-	[self startLoadingClientInformation];
+	self.drawingTimer = [NSTimer scheduledTimerWithTimeInterval:0.017		// 60fps
+														 target:self
+													   selector:@selector(timerFired:)
+													   userInfo:nil
+														repeats:YES];
+	[self configureMainButton];
+}
+
+
+- (void) viewDidDisappear:(BOOL)animated
+{
+	[self.drawingTimer invalidate];
+	self.drawingTimer = nil;
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Drawing
+// ---------------------------------------------------------------------------------------------------------------
+
+- (void) timerFired:(NSTimer *)theTimer
+{
+	[self.activityView setNeedsDisplay];
+}
+
+
+- (void) configureMainButton
+{
+	UIImage *buttonImage;
+
+	// creating an im memory image as a template for the buttons
+	CGFloat radius = 20.0f;
+	CGFloat width = radius * 2+15;
+	UIColor *foregroundColor = [UIColor whiteColor];
+
+	buttonImage = [self resizableImageWithForegroundColor:foregroundColor withWidth:width radius:radius forState:UIControlStateNormal];
+	[self.mainButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+	
+	buttonImage = [self resizableImageWithForegroundColor:foregroundColor withWidth:width radius:radius forState:UIControlStateHighlighted];
+	[self.mainButton setBackgroundImage:buttonImage forState:UIControlStateHighlighted];
+}
+
+
+- (UIImage *) resizableImageWithForegroundColor:(UIColor *)foregroundColor withWidth:(CGFloat)width radius:(CGFloat)radius forState:(UIControlState)buttonState
+{
+	// set up drawing context
+	UIGraphicsBeginImageContext(CGSizeMake(width, width));
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	UIGraphicsPushContext(context);
+
+	// drawing state image
+	[[UIColor clearColor] set];
+	CGContextFillRect(context, CGRectMake(0, 0, width, width));
+	
+	[foregroundColor set];
+	CGContextSetShadowWithColor(context, CGSizeMake(0,0), 3.0, foregroundColor.CGColor);
+	
+	CGPathRef roundedRectPath = [self newPathForRoundedRect:CGRectInset(CGRectMake(0, 0, width, width),5,5) radius:radius];
+	CGContextAddPath(context, roundedRectPath);
+	
+	if (buttonState == UIControlStateNormal)
+		CGContextStrokePath(context);
+	else
+		CGContextFillPath(context);
+	
+	// take down drawing context
+	UIGraphicsPopContext();
+	UIImage *tempImage = UIGraphicsGetImageFromCurrentImageContext();
+	UIGraphicsEndImageContext();
+	
+	return [tempImage resizableImageWithCapInsets:UIEdgeInsetsMake(radius +6, radius +6, radius +6, radius +6)];
+}
+
+
+- (CGPathRef) newPathForRoundedRect:(CGRect)rect radius:(CGFloat)radius
+{
+	CGMutablePathRef retPath = CGPathCreateMutable();
+	
+	CGRect innerRect = CGRectInset(rect, radius, radius);
+	
+	CGFloat inside_right = innerRect.origin.x + innerRect.size.width;
+	CGFloat outside_right = rect.origin.x + rect.size.width;
+	CGFloat inside_bottom = innerRect.origin.y + innerRect.size.height;
+	CGFloat outside_bottom = rect.origin.y + rect.size.height;
+	
+	CGFloat inside_top = innerRect.origin.y;
+	CGFloat outside_top = rect.origin.y;
+	CGFloat outside_left = rect.origin.x;
+	
+	CGPathMoveToPoint(retPath, NULL, innerRect.origin.x, outside_top);
+	
+	CGPathAddLineToPoint(retPath, NULL, inside_right, outside_top);
+	CGPathAddArcToPoint(retPath, NULL, outside_right, outside_top, outside_right, inside_top, radius);
+	CGPathAddLineToPoint(retPath, NULL, outside_right, inside_bottom);
+	CGPathAddArcToPoint(retPath, NULL,  outside_right, outside_bottom, inside_right, outside_bottom, radius);
+	
+	CGPathAddLineToPoint(retPath, NULL, innerRect.origin.x, outside_bottom);
+	CGPathAddArcToPoint(retPath, NULL,  outside_left, outside_bottom, outside_left, inside_bottom, radius);
+	CGPathAddLineToPoint(retPath, NULL, outside_left, inside_top);
+	CGPathAddArcToPoint(retPath, NULL,  outside_left, outside_top, innerRect.origin.x, outside_top, radius);
+	
+	CGPathCloseSubpath(retPath);
+	
+	return retPath;
+}
+
+
+// ---------------------------------------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Interaction
+// ---------------------------------------------------------------------------------------------------------------
+
+- (IBAction) buttonPressed:(id)sender
+{
+	[self startLoadingAuthors];
 }
 
 
@@ -83,8 +200,15 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 			 NSLog(@"%s done, data:\n %@", __PRETTY_FUNCTION__, parsedDict);
 		 }];
 	}];
+	
+	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+	NSError* error;
+	NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
+															   options:kNilOptions
+																 error:&error];
+	
+	NSLog(@"%s done, data:\n %@", __PRETTY_FUNCTION__, parsedDict);
 }
-
 
 
 - (void) didLoadAuthors

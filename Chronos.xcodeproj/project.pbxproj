@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F16C42D166633EF009DB0E0 /* CHActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F16C42C166633EF009DB0E0 /* CHActivityView.m */; };
 		3FC4710116638D9C00A9864D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710016638D9C00A9864D /* UIKit.framework */; };
 		3FC4710316638D9C00A9864D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710216638D9C00A9864D /* Foundation.framework */; };
 		3FC4710516638D9C00A9864D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710416638D9C00A9864D /* CoreGraphics.framework */; };
@@ -24,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F16C42B166633EF009DB0E0 /* CHActivityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CHActivityView.h; sourceTree = "<group>"; };
+		3F16C42C166633EF009DB0E0 /* CHActivityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CHActivityView.m; sourceTree = "<group>"; };
 		3FC470FC16638D9C00A9864D /* Chronos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chronos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FC4710016638D9C00A9864D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3FC4710216638D9C00A9864D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -124,6 +127,8 @@
 				3FC4711F16638D9C00A9864D /* CHViewController.m */,
 				3FC471341663C91000A9864D /* CHJSONLoader.h */,
 				3FC471351663C91000A9864D /* CHJSONLoader.m */,
+				3F16C42B166633EF009DB0E0 /* CHActivityView.h */,
+				3F16C42C166633EF009DB0E0 /* CHActivityView.m */,
 			);
 			name = "Main View";
 			path = Chronos;
@@ -218,6 +223,7 @@
 				3FC4711116638D9C00A9864D /* CHAppDelegate.m in Sources */,
 				3FC4712016638D9C00A9864D /* CHViewController.m in Sources */,
 				3FC471361663C91000A9864D /* CHJSONLoader.m in Sources */,
+				3F16C42D166633EF009DB0E0 /* CHActivityView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
