@@ -25,7 +25,7 @@
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonPressed:" destination="2" eventType="touchUpInside" id="JDq-QS-xja"/>
+                                    <action selector="badButtonPressed:" destination="2" eventType="touchUpInside" id="Vfz-hR-c41"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nJa-jx-yhL">
@@ -41,7 +41,7 @@
                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="buttonPressed:" destination="2" eventType="touchUpInside" id="EPg-7s-1uS"/>
+                                    <action selector="goodButtonPressed:" destination="2" eventType="touchUpInside" id="V2L-f5-Zfs"/>
                                 </connections>
                             </button>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JgB-j6-QYQ" customClass="CHActivityView">
@@ -66,11 +66,13 @@
                     </view>
                     <connections>
                         <outlet property="activityView" destination="JgB-j6-QYQ" id="zMb-7Z-MZn"/>
-                        <outlet property="mainButton" destination="w6V-M1-fet" id="TNF-MN-tB1"/>
+                        <outletCollection property="buttons" destination="w6V-M1-fet" id="l0t-La-eym"/>
+                        <outletCollection property="buttons" destination="nJa-jx-yhL" id="jLJ-et-Oa5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="466" y="102"/>
         </scene>
     </scenes>
     <classes>
@@ -80,9 +82,10 @@
         <class className="CHViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CHViewController.h"/>
             <relationships>
-                <relationship kind="action" name="buttonPressed:"/>
+                <relationship kind="action" name="badButtonPressed:"/>
+                <relationship kind="action" name="goodButtonPressed:"/>
                 <relationship kind="outlet" name="activityView" candidateClass="CHActivityView"/>
-                <relationship kind="outlet" name="mainButton" candidateClass="UIButton"/>
+                <relationship kind="outletCollection" name="buttons" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">

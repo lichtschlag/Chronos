@@ -14,9 +14,10 @@
 @interface CHViewController : UIViewController
 // ===============================================================================================================
 
-@property (weak, nonatomic) IBOutlet CHActivityView *activityView;
-@property (weak, nonatomic) IBOutlet UIButton *mainButton;
+@property (weak, nonatomic)		IBOutlet						CHActivityView	*activityView;
+@property (strong, nonatomic)	IBOutletCollection(UIButton)	NSArray			*buttons;
 
-- (IBAction) buttonPressed:(id)sender;
+- (IBAction) goodButtonPressed:(id)sender;
+- (IBAction) badButtonPressed:(id)sender;
 
 @end

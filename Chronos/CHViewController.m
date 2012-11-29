@@ -14,9 +14,10 @@
 @interface CHViewController ()
 // ===============================================================================================================
 
-@property (strong) 	CHJSONLoader *clientLoader;
-@property (strong) 	NSOperationQueue *backgroundQueue;
-@property (strong)	NSTimer *drawingTimer;
+@property (strong) 	CHJSONLoader		*clientLoader;
+@property (strong) 	NSOperationQueue	*backgroundQueue;
+@property (strong)	NSTimer				*drawingTimer;
+@property (strong)	NSMutableDictionary	*authorData;
 
 @end
 
@@ -40,15 +41,11 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 {
     [super viewDidLoad];
 	
+	// set default values for properties
 	self.backgroundQueue = [[NSOperationQueue alloc] init];
-	[self.backgroundQueue setName:@"de.rwth.hci.iPhoneClass.chronos.backgroundQueue"];	
-}
-
-
-- (void) didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[self.backgroundQueue setName:@"de.rwth.hci.iPhoneClass.chronos.backgroundQueue"];
+	
+	self.authorData = [NSMutableDictionary dictionary];
 }
 
 
@@ -59,7 +56,7 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 													   selector:@selector(timerFired:)
 													   userInfo:nil
 														repeats:YES];
-	[self configureMainButton];
+	[self configureButtons];
 }
 
 
@@ -81,7 +78,7 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 }
 
 
-- (void) configureMainButton
+- (void) configureButtons
 {
 	UIImage *buttonImage;
 
@@ -90,11 +87,23 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 	CGFloat width = radius * 2+15;
 	UIColor *foregroundColor = [UIColor whiteColor];
 
-	buttonImage = [self resizableImageWithForegroundColor:foregroundColor withWidth:width radius:radius forState:UIControlStateNormal];
-	[self.mainButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+	buttonImage = [self resizableImageWithForegroundColor:foregroundColor
+												withWidth:width
+												   radius:radius
+												 forState:UIControlStateNormal];
+	for (UIButton *aButton in self.buttons)
+	{
+		[aButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+	}
 	
-	buttonImage = [self resizableImageWithForegroundColor:foregroundColor withWidth:width radius:radius forState:UIControlStateHighlighted];
-	[self.mainButton setBackgroundImage:buttonImage forState:UIControlStateHighlighted];
+	buttonImage = [self resizableImageWithForegroundColor:foregroundColor
+												withWidth:width
+												   radius:radius
+												 forState:UIControlStateHighlighted];
+	for (UIButton *aButton in self.buttons)
+	{
+		[aButton setBackgroundImage:buttonImage forState:UIControlStateHighlighted];
+	}
 }
 
 
@@ -131,6 +140,7 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 
 - (CGPathRef) newPathForRoundedRect:(CGRect)rect radius:(CGFloat)radius
 {
+	// helper function for the button images
 	CGMutablePathRef retPath = CGPathCreateMutable();
 	
 	CGRect innerRect = CGRectInset(rect, radius, radius);
@@ -167,9 +177,15 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 #pragma mark Interaction
 // ---------------------------------------------------------------------------------------------------------------
 
-- (IBAction) buttonPressed:(id)sender
+- (IBAction) badButtonPressed:(id)sender
 {
-	[self startLoadingAuthors];
+	[self loadAuthorInformationSynchronously];
+}
+
+
+- (IBAction) goodButtonPressed:(id)sender
+{
+	[self loadAuthorInformationAsynchronously];
 }
 
 
@@ -178,7 +194,42 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 #pragma mark Loading Author Information
 // ---------------------------------------------------------------------------------------------------------------
 
-- (void) startLoadingAuthors
+- (void) loadAuthorInformationSynchronously
+{
+	// formulate the request
+	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+	[request setValue:kCHZeitLeonhardAPIKey forHTTPHeaderField:@"X-Authorization"];
+	assert(request != nil);
+
+	// send the request over the network
+	NSError *networkError;
+	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:&networkError];
+	
+	// use the resulting data
+	if (data)
+	{
+		NSError* parsingError;
+		NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
+																   options:kNilOptions
+																	 error:&parsingError];
+		
+		if (!parsingError)
+		{
+			self.authorData = [NSMutableDictionary dictionaryWithDictionary:parsedDict];
+			[self didUpdateAuthorInformation];
+		}
+		else
+		{
+			NSLog(@"%s Could not interpret JSON data. The error returned was: %@", __PRETTY_FUNCTION__, [parsingError localizedDescription]);
+		}
+	}
+	else
+		NSLog(@"%s No data arrived. The error returned was: %@", __PRETTY_FUNCTION__, [networkError localizedDescription]);
+}
+
+
+- (void) loadAuthorInformationAsynchronously
 {
 	// start the download
 	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
@@ -188,38 +239,36 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 	
 	[NSURLConnection sendAsynchronousRequest:request
 									   queue:self.backgroundQueue
-						   completionHandler:^(NSURLResponse *resp, NSData *data, NSError *err)
+						   completionHandler:^(NSURLResponse *resp, NSData *data, NSError *networkError)
 	 {
 		 [[NSOperationQueue mainQueue] addOperationWithBlock:^
 		 {
-			 NSError* error;
-			 NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
-																		options:kNilOptions
-																		  error:&error];
-			 
-			 NSLog(@"%s done, data:\n %@", __PRETTY_FUNCTION__, parsedDict);
+			 NSError* parsingError;
+			 if (data)
+			 {
+				 NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
+																			options:kNilOptions
+																			  error:&parsingError];
+				 if (!parsingError)
+				 {
+					 self.authorData = [NSMutableDictionary dictionaryWithDictionary:parsedDict];
+					 [self didUpdateAuthorInformation];
+				 }
+				 else
+				 {
+					 NSLog(@"%s Could not interpret JSON data. The error returned was: %@", __PRETTY_FUNCTION__, [parsingError localizedDescription]);
+				 }
+			 }
+			 else
+				 NSLog(@"%s No data arrived. The error returned was: %@", __PRETTY_FUNCTION__, [networkError localizedDescription]);
 		 }];
 	}];
-	
-	NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-	NSError* error;
-	NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
-															   options:kNilOptions
-																 error:&error];
-	
-	NSLog(@"%s done, data:\n %@", __PRETTY_FUNCTION__, parsedDict);
 }
 
 
-- (void) didLoadAuthors
+- (void) didUpdateAuthorInformation
 {
 	// display data on screen
-}
-
-
-- (void) didFinishLoadingAuthors
-{
-	// teardown
 }
 
 
@@ -252,7 +301,6 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 		{
 			NSInteger quota = [response[@"quota"] intValue];
 			NSLog(@"Remaining quota is %d.", quota);
-			[weakSelf startLoadingAuthors];
 		}
 		
 		weakSelf.clientLoader = nil;
