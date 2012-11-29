@@ -9,6 +9,7 @@
 #import "CHViewController.h"
 #import "CHJSONLoader.h"
 #import "CHActivityView.h"
+#import <QuartzCore/QuartzCore.h>
 
 // ===============================================================================================================
 @interface CHViewController ()
@@ -196,6 +197,17 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 
 - (void) loadAuthorInformationSynchronously
 {
+	// clear old data (this way we get an animation)
+	[self.collectionView performBatchUpdates:^
+	 {
+		 for (int i = 0; i < [self.authorData count]; i++)
+		 {
+			 [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i
+																				inSection:0]]];
+		 }
+		 self.authorData = [NSMutableDictionary dictionary];
+	 } completion:nil];
+	
 	// formulate the request
 	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
@@ -231,6 +243,17 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 
 - (void) loadAuthorInformationAsynchronously
 {
+	// clear old data (this way we get an animation)
+	[self.collectionView performBatchUpdates:^
+	{
+		for (int i = 0; i < [self.authorData count]; i++)
+		{
+			[self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i
+																			   inSection:0]]];
+		}
+		self.authorData = [NSMutableDictionary dictionary];
+	} completion:nil];
+	
 	// start the download
 	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
@@ -269,6 +292,14 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 - (void) didUpdateAuthorInformation
 {
 	// display data on screen
+	[self.collectionView performBatchUpdates:^
+	 {
+		 for (int i = 0; i < [self.authorData count]; i++)
+		 {
+			 [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i
+																				inSection:0]]];
+		 }
+	 } completion:nil];
 }
 
 
@@ -280,9 +311,6 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 - (void) startLoadingClientInformation
 {
 	// start the download
-
-	// both methods work
-	//	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:[kCHZeitServerClient stringByAppendingFormat:@"?api_key=%@", kCHZeitLeonhardAPIKey]]];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kCHZeitServerClient]];
 	[request setValue:kCHZeitLeonhardAPIKey forHTTPHeaderField:@"X-Authorization"];
 	
@@ -308,4 +336,42 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 }
 
 
+
+// ---------------------------------------------------------------------------------------------------------------
+#pragma mark -
+#pragma mark Data source for the collection view
+// ---------------------------------------------------------------------------------------------------------------
+
+- (NSInteger) numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+	return 1;
+}
+
+
+- (NSInteger) collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section;
+{
+	return [self.authorData count];
+}
+
+
+- (UICollectionViewCell *) collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath;
+{
+    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:@"authorCell" forIndexPath:indexPath];
+	
+    // Configure the cell as a blurry white box
+	CALayer *innerLayer = [CALayer new];
+	innerLayer.frame = CGRectInset(cell.bounds, 2, 2);
+	innerLayer.backgroundColor = [UIColor whiteColor].CGColor;
+	innerLayer.shadowRadius = 2;
+	innerLayer.shadowOffset = CGSizeMake(0, 0);
+	innerLayer.shadowOpacity = 1.0;
+	innerLayer.shadowColor = [UIColor whiteColor].CGColor;
+	
+	[cell.contentView.layer addSublayer:innerLayer];
+	
+    return cell;
+}
+
+
 @end
+

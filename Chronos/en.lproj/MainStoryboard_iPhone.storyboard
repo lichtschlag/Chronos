@@ -51,13 +51,42 @@
                                     <constraint firstAttribute="height" constant="80" type="user" id="ybp-kE-myd"/>
                                 </constraints>
                             </view>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nUD-Bn-6Xc">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="7xt-Ry-ASX">
+                                    <size key="itemSize" width="14" height="14"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="authorCell" id="Q8f-07-IFv">
+                                        <rect key="frame" x="0.0" y="0.0" width="14" height="14"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="14" height="14"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="2" id="bj0-ZE-6wn"/>
+                                    <outlet property="delegate" destination="2" id="5UB-FT-m9e"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="nUD-Bn-6Xc" firstAttribute="top" secondItem="JgB-j6-QYQ" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="3jl-Hd-vOZ"/>
+                            <constraint firstAttribute="trailing" secondItem="nUD-Bn-6Xc" secondAttribute="trailing" constant="10" type="user" id="799-Zh-XQc"/>
+                            <constraint firstAttribute="bottom" secondItem="nUD-Bn-6Xc" secondAttribute="bottom" constant="10" type="user" id="831-6Y-47Z"/>
                             <constraint firstItem="w6V-M1-fet" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="DsE-g7-F90"/>
+                            <constraint firstItem="nUD-Bn-6Xc" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="10" type="user" id="JwT-m0-VvJ"/>
                             <constraint firstItem="JgB-j6-QYQ" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="user" id="MWx-bK-wS4"/>
-                            <constraint firstItem="nJa-jx-yhL" firstAttribute="bottom" secondItem="w6V-M1-fet" secondAttribute="bottom" type="default" id="U0Z-AB-647"/>
-                            <constraint firstItem="w6V-M1-fet" firstAttribute="bottom" secondItem="JgB-j6-QYQ" secondAttribute="bottom" type="default" id="lwB-PO-CwU"/>
+                            <constraint firstItem="nUD-Bn-6Xc" firstAttribute="top" secondItem="w6V-M1-fet" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Rl6-KT-yfE"/>
+                            <constraint firstItem="nUD-Bn-6Xc" firstAttribute="top" secondItem="nJa-jx-yhL" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="fwe-EL-Pwq"/>
                             <constraint firstItem="nJa-jx-yhL" firstAttribute="top" secondItem="3" secondAttribute="top" constant="20" symbolic="YES" type="default" id="nJ5-0S-fuC"/>
                             <constraint firstItem="JgB-j6-QYQ" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="19" type="user" id="qkB-DW-dfn"/>
                             <constraint firstItem="w6V-M1-fet" firstAttribute="leading" secondItem="JgB-j6-QYQ" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="u5a-dX-ajb"/>
@@ -66,6 +95,7 @@
                     </view>
                     <connections>
                         <outlet property="activityView" destination="JgB-j6-QYQ" id="zMb-7Z-MZn"/>
+                        <outlet property="collectionView" destination="nUD-Bn-6Xc" id="rm4-f7-rWA"/>
                         <outletCollection property="buttons" destination="w6V-M1-fet" id="l0t-La-eym"/>
                         <outletCollection property="buttons" destination="nJa-jx-yhL" id="jLJ-et-Oa5"/>
                     </connections>
@@ -75,23 +105,6 @@
             <point key="canvasLocation" x="466" y="102"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CHActivityView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CHActivityView.h"/>
-        </class>
-        <class className="CHViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CHViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="badButtonPressed:"/>
-                <relationship kind="action" name="goodButtonPressed:"/>
-                <relationship kind="outlet" name="activityView" candidateClass="CHActivityView"/>
-                <relationship kind="outletCollection" name="buttons" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

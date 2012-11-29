@@ -15,6 +15,7 @@
 		3F519D351667AB33008FB5D6 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F519D2E1667AB33008FB5D6 /* Icon.png */; };
 		3F519D361667AB33008FB5D6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F519D2F1667AB33008FB5D6 /* Icon@2x.png */; };
 		3F519D371667AB33008FB5D6 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F519D301667AB33008FB5D6 /* iTunesArtwork.png */; };
+		3F519D3E1667B855008FB5D6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F519D3D1667B855008FB5D6 /* QuartzCore.framework */; };
 		3FC4710116638D9C00A9864D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710016638D9C00A9864D /* UIKit.framework */; };
 		3FC4710316638D9C00A9864D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710216638D9C00A9864D /* Foundation.framework */; };
 		3FC4710516638D9C00A9864D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FC4710416638D9C00A9864D /* CoreGraphics.framework */; };
@@ -41,6 +42,7 @@
 		3F519D2E1667AB33008FB5D6 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		3F519D2F1667AB33008FB5D6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		3F519D301667AB33008FB5D6 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		3F519D3D1667B855008FB5D6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3FC470FC16638D9C00A9864D /* Chronos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chronos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FC4710016638D9C00A9864D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3FC4710216638D9C00A9864D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F519D3E1667B855008FB5D6 /* QuartzCore.framework in Frameworks */,
 				3FC4710116638D9C00A9864D /* UIKit.framework in Frameworks */,
 				3FC4710316638D9C00A9864D /* Foundation.framework in Frameworks */,
 				3FC4710516638D9C00A9864D /* CoreGraphics.framework in Frameworks */,
@@ -95,6 +98,7 @@
 		3FC470F116638D9B00A9864D = {
 			isa = PBXGroup;
 			children = (
+				3F519D3D1667B855008FB5D6 /* QuartzCore.framework */,
 				3FC4712A16638E2800A9864D /* README.md */,
 				3FC4710616638D9C00A9864D /* App Core */,
 				3FC4712D16638E4A00A9864D /* Main View */,
