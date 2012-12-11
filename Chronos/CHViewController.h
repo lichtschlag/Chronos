@@ -16,9 +16,10 @@
 
 @property (weak, nonatomic)		IBOutlet				CHActivityView		*activityView;
 @property (weak, nonatomic)		IBOutlet				UICollectionView	*collectionView;
-@property (strong, nonatomic)	IBOutletCollection(UIButton)	NSArray		*buttons;
+@property (strong, nonatomic)	IBOutlet				UIButton			*button;
 
-- (IBAction) goodButtonPressed:(id)sender;
 - (IBAction) badButtonPressed:(id)sender;
+- (IBAction) goodButtonPressed:(id)sender;
+- (IBAction) betterButtonPressed:(id)sender;
 
 @end

@@ -58,6 +58,8 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 													   userInfo:nil
 														repeats:YES];
 	[self configureButtons];
+	
+	[self startLoadingClientInformation];
 }
 
 
@@ -92,19 +94,13 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 												withWidth:width
 												   radius:radius
 												 forState:UIControlStateNormal];
-	for (UIButton *aButton in self.buttons)
-	{
-		[aButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-	}
+	[self.button setBackgroundImage:buttonImage forState:UIControlStateNormal];
 	
 	buttonImage = [self resizableImageWithForegroundColor:foregroundColor
 												withWidth:width
 												   radius:radius
 												 forState:UIControlStateHighlighted];
-	for (UIButton *aButton in self.buttons)
-	{
-		[aButton setBackgroundImage:buttonImage forState:UIControlStateHighlighted];
-	}
+	[self.button setBackgroundImage:buttonImage forState:UIControlStateHighlighted];
 }
 
 
@@ -189,6 +185,11 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 	[self loadAuthorInformationAsynchronously];
 }
 
+- (IBAction) betterButtonPressed:(id)sender
+{
+	[self loadAuthorInformationAsynchronously];
+}
+
 
 // ---------------------------------------------------------------------------------------------------------------
 #pragma mark -
@@ -198,15 +199,7 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 - (void) loadAuthorInformationSynchronously
 {
 	// clear old data (this way we get an animation)
-	[self.collectionView performBatchUpdates:^
-	 {
-		 for (int i = 0; i < [self.authorData count]; i++)
-		 {
-			 [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i
-																				inSection:0]]];
-		 }
-		 self.authorData = [NSMutableDictionary dictionary];
-	 } completion:nil];
+	[self clearData];
 	
 	// formulate the request
 	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
@@ -244,15 +237,7 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 - (void) loadAuthorInformationAsynchronously
 {
 	// clear old data (this way we get an animation)
-	[self.collectionView performBatchUpdates:^
-	{
-		for (int i = 0; i < [self.authorData count]; i++)
-		{
-			[self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i
-																			   inSection:0]]];
-		}
-		self.authorData = [NSMutableDictionary dictionary];
-	} completion:nil];
+	[self clearData];
 	
 	// start the download
 	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
@@ -286,6 +271,59 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 				 NSLog(@"%s No data arrived. The error returned was: %@", __PRETTY_FUNCTION__, [networkError localizedDescription]);
 		 }];
 	}];
+}
+
+
+- (void) loadAuthorInformationStaggered
+{
+	// clear old data (this way we get an animation)
+	[self clearData];
+	
+	// get the amount of records first
+	NSString *requestString = [kCHZeitServerAuthors stringByAppendingFormat:@"?q=*&limit=3&fields=uri,value"];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:requestString]];
+	[request setValue:kCHZeitLeonhardAPIKey forHTTPHeaderField:@"X-Authorization"];
+	assert(request != nil);
+	
+	[NSURLConnection sendAsynchronousRequest:request
+									   queue:self.backgroundQueue
+						   completionHandler:^(NSURLResponse *resp, NSData *data, NSError *networkError)
+	 {
+		 [[NSOperationQueue mainQueue] addOperationWithBlock:^
+		  {
+			  NSError* parsingError;
+			  if (data)
+			  {
+				  NSDictionary* parsedDict = [NSJSONSerialization JSONObjectWithData:data
+																			 options:kNilOptions
+																			   error:&parsingError];
+				  if (!parsingError)
+				  {
+					  self.authorData = [NSMutableDictionary dictionaryWithDictionary:parsedDict];
+					  [self didUpdateAuthorInformation];
+				  }
+				  else
+				  {
+					  NSLog(@"%s Could not interpret JSON data. The error returned was: %@", __PRETTY_FUNCTION__, [parsingError localizedDescription]);
+				  }
+			  }
+			  else
+				  NSLog(@"%s No data arrived. The error returned was: %@", __PRETTY_FUNCTION__, [networkError localizedDescription]);
+		  }];
+	 }];
+}
+
+- (void) clearData
+{
+	[self.collectionView performBatchUpdates:^
+	 {
+		 for (int i = 0; i < [self.authorData count]; i++)
+		 {
+			 [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:i
+																				inSection:0]]];
+		 }
+		 self.authorData = [NSMutableDictionary dictionary];
+	 } completion:nil];
 }
 
 
@@ -327,14 +365,20 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
 		}
 		else
 		{
-			NSInteger quota = [response[@"quota"] intValue];
-			NSLog(@"Remaining quota is %d.", quota);
+			float quota = [response[@"requests"] floatValue] / [response[@"quota"] floatValue];
+			NSLog(@"We used %2.2f%% of our daily quota.", quota);
 		}
 		
 		weakSelf.clientLoader = nil;
 	}];
 }
 
+
+//- (void) setNewAuthorData:(NSMutableDictionary *)newData
+//{
+//	NSDictionary *currentData = self.authorData;
+//	NSDictionary 
+//}
 
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -361,8 +405,10 @@ NSString *const kCHZeitServerClient		= @"http://api.zeit.de/client";
     // Configure the cell as a blurry white box
 	CALayer *innerLayer = [CALayer new];
 	innerLayer.frame = CGRectInset(cell.bounds, 2, 2);
-	innerLayer.backgroundColor = [UIColor whiteColor].CGColor;
-	innerLayer.shadowRadius = 2;
+	innerLayer.backgroundColor	= [UIColor clearColor].CGColor;
+	innerLayer.borderColor		= [UIColor whiteColor].CGColor;
+	innerLayer.borderWidth		= 1;
+	innerLayer.shadowRadius		= 1;
 	innerLayer.shadowOffset = CGSizeMake(0, 0);
 	innerLayer.shadowOpacity = 1.0;
 	innerLayer.shadowColor = [UIColor whiteColor].CGColor;
